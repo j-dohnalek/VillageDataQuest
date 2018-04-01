@@ -1,5 +1,7 @@
 # Village Data Quest
 
+https://www.villagesoftware.co.uk/data-quest#application-form
+
 ## The Gist
 * You and your team are competing against others in real time, to find the most valuable packages of land to claim.
 * You are presented with a 1000 x 1000 csv grid, representing a type of natural resource found in the land. 
