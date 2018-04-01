@@ -1,4 +1,12 @@
 # Village Data Quest
+
+## The Gist
+* You and your team are competing against others in real time, to find the most valuable packages of land to claim.
+* You are presented with a 1000 x 1000 csv grid, representing a type of natural resource found in the land. 
+* Each cell will have a value from 0 to 100 for each resource, each resource has a value.
+* Your main objective is to find and claim 5 the most prosperous 10 x 10 pieces you can on the grid. 
+* Claiming a grid happens on a first come, first served basis. Once you have claimed a piece of land, no one else can claim any cells in it.
+
 ## Algorithm
 * Optimal Stopping 
 * Kadane's Algorithm
