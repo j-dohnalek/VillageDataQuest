@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="14092699-6bd8-4c2e-ab0b-48be48becf11" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dataquest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/1DArray/sliding_max_sum.py" beforeDir="false" afterPath="$PROJECT_DIR$/PythonCode/1DArray/sliding_max_sum.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DArray/csv_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/PythonCode/2DArray/csv_generator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DArray/foo.csv" beforeDir="false" afterPath="$PROJECT_DIR$/PythonCode/2DArray/foo.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DArray/iter1.py" beforeDir="false" afterPath="$PROJECT_DIR$/PythonCode/2DArray/iter1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DArray/iter2.py" beforeDir="false" afterPath="$PROJECT_DIR$/PythonCode/2DArray/iter2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DArray/iter3.py" beforeDir="false" afterPath="$PROJECT_DIR$/PythonCode/2DArray/iter3.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DArray/iter4.py" beforeDir="false" afterPath="$PROJECT_DIR$/PythonCode/2DArray/iter4.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/3DArray/compute.py" beforeDir="false" afterPath="$PROJECT_DIR$/PythonCode/3DArray/compute.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/3DArray/foo.csv" beforeDir="false" afterPath="$PROJECT_DIR$/PythonCode/3DArray/foo.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/3DArray/generate_rand_csv.py" beforeDir="false" afterPath="$PROJECT_DIR$/PythonCode/3DArray/generate_rand_csv.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Village Data Quest.ods" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Village Data Quest.xlsm" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="dataquest.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/dataquest.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="288">
+              <caret line="57" selection-start-line="57" selection-end-line="57" />
+              <folding>
+                <element signature="e#392#403#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>stripSum</find>
+      <find>}</find>
+      <find>coordinates</find>
+      <find>largest</find>
+      <find>'__largest__'</find>
+      <find>kadane</find>
+      <find>__largest__</find>
+      <find>top_n_values</find>
+      <find>set_coords</find>
+      <find>get_top</find>
+      <find>print_n_topvalue</find>
+      <find>print_top_value</find>
+      <find>maximumFinder</find>
+      <find>coordinate</find>
+      <find>k</find>
+      <find>new_sum</find>
+      <find>__contaniers__</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>strip_sum</replace>
+      <replace>[</replace>
+      <replace>]</replace>
+      <replace>__coordinates__</replace>
+      <replace>__largest__</replace>
+      <replace>'max'</replace>
+      <replace>sum_tricky</replace>
+      <replace>n_values</replace>
+      <replace>set_coordinates</replace>
+      <replace>print_n_topvalue</replace>
+      <replace>print_top_value</replace>
+      <replace>print_result</replace>
+      <replace>maximum_finder</replace>
+      <replace>__container__</replace>
+      <replace>new_max</replace>
+      <replace>container</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/dataquest.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="65" />
+    <option name="y" value="-4" />
+    <option name="width" value="1855" />
+    <option name="height" value="1084" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="VillageSoftware" type="b2602c69:ProjectViewProjectNode" />
+              <item name="VillageSoftware" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/PythonCode" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="dataquest" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="VillageSoftware" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dataquest.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.dataquest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="14092699-6bd8-4c2e-ab0b-48be48becf11" name="Default" comment="" />
+      <created>1523952340786</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1523952340786</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24959569" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32889345" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Python Console" order="7" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/dataquest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2070">
+          <caret line="115" lean-forward="true" selection-start-line="115" selection-end-line="115" />
+          <folding>
+            <element signature="e#392#403#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataquest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1746">
+          <caret line="97" lean-forward="true" selection-start-line="97" selection-end-line="97" />
+          <folding>
+            <element signature="e#392#403#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataquest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="28" column="16" lean-forward="true" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="16" />
+          <folding>
+            <element signature="e#392#403#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataquest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2268">
+          <caret line="126" column="31" selection-start-line="126" selection-start-column="31" selection-end-line="126" selection-end-column="31" />
+          <folding>
+            <element signature="e#392#403#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataquest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1368">
+          <caret line="76" column="39" selection-start-line="76" selection-start-column="39" selection-end-line="76" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataquest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1350">
+          <caret line="76" column="39" selection-start-line="76" selection-start-column="39" selection-end-line="76" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataquest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="57" selection-start-line="57" selection-end-line="57" />
+          <folding>
+            <element signature="e#392#403#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
