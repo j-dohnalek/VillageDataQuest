@@ -10,14 +10,23 @@ import glob
 import numpy as np
 import time
 
-# 5 *.csv files
-#PATH = 'Data/*.csv'
-PATH = 'DataGenerated/*.csv'
-#PATH = 'Data10x10/gas.csv'
+# See generator.py
+#PATH = 'DataGenerated/*.csv'
 
-ARRAY_SIZE = 1000
-SUB_ARRAY_SIZE = 10
+#PATH = 'Data/*.csv'
+PATH = 'Data/gas.csv'
+
+# Size of the side of the array (1000x1000 in actual competition)
+ARRAY_SIZE = 10
+
+# Size of a side of a sub array
+SUB_ARRAY_SIZE = 2
+
+# Find N overlapping highest values
+# TODO: Explain why 16?
 FIND_N_HIGHEST = 16
+
+# Filter N unique  non-overlapping values
 FILTER_N_HIGHEST = 5
 
 # CLASS ################################################################
@@ -53,9 +62,8 @@ class Square:
 
 
 class MaximumFinder:
-    """
-    Find the N maximum elements that do not overlap
-    """
+    """ Find the N maximum elements that do not overlap """
+
     x, y, max = None, None, None
 
     # Store coordinates of the highest N fields
@@ -97,28 +105,28 @@ class MaximumFinder:
         obj = self.containers
         old_x, old_y, old_max = 0, 0, 0
 
-        # 1 .. N = 5
+        # 1 .. N highest values
         for idx in range(1, self.n_values + 1):
+
+            # Deal with the highest 1st highest value
             if idx == 1 and self.max > obj[idx]['max']:
 
                 old_x, old_y, old_max = obj[idx]['x'], obj[idx]['y'], obj[idx]['max']
                 obj[idx] = dict(x=self.x, y=self.y, max=self.max)
 
-            # 2 .. N = 5
+            # 2 .. N highest values
             elif idx > 1:
                 if old_max > obj[idx]['max']:
 
                     temp_x, temp_y, temp_max = old_x, old_y, old_max
-                    old_x, old_y = obj[idx]['x'], obj[idx]['y']
-                    old_max = obj[idx]['max']
+                    old_x, old_y, old_max = obj[idx]['x'], obj[idx]['y'], obj[idx]['max']
                     obj[idx] = dict(x=temp_x, y=temp_y, max=temp_max)
 
                 else:
                     if self.max >= obj[idx]['max']:
                         if self.max < obj[idx - 1]['max']:
 
-                            old_x, old_y = obj[idx]['x'], obj[idx]['y']
-                            old_max = obj[idx]['max']
+                            old_x, old_y, old_max = obj[idx]['x'], obj[idx]['y'], obj[idx]['max']
                             obj[idx] = dict(x=self.x, y=self.y, max=self.max)
 
         self.containers = obj
@@ -277,6 +285,4 @@ if __name__ == '__main__':
     highest_return_combination(container)
 
     end = time.clock()
-    print('Code time: %.6f seconds' % (end - start))
     print('Code time: %.6f miliseconds' % ((end - start) * 1000))
-
