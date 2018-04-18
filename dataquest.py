@@ -14,9 +14,9 @@ import math
 #PATH = 'Data/*.csv'
 
 PATH = 'Data/gas.csv'
-SUB_ARRAY_SIZE = 1
+SUB_ARRAY_SIZE = 2
 ARRAY_SIZE = 10
-FIND_N_HIGHEST = 3
+FIND_N_HIGHEST = 16
 
 # CLASS ################################################################
 
@@ -38,14 +38,16 @@ class Square:
     Define a square
     """
     def __init__(self, top_right):
-        self.bottom_left = Point(top_right.x - SUB_ARRAY_SIZE-1, top_right.y + SUB_ARRAY_SIZE-1)
+        x = top_right.x - (SUB_ARRAY_SIZE-1)
+        y = top_right.y + (SUB_ARRAY_SIZE-1)
+        self.bottom_left = Point(x, y)
         self.top_right = top_right
 
     def intersects(self, other):
         return not (self.top_right.x < other.bottom_left.x or
                     self.bottom_left.x > other.top_right.x or
-                    self.top_right.y < other.bottom_left.y or
-                    self.bottom_left.y > other.top_right.y)
+                    self.top_right.y > other.bottom_left.y or
+                    self.bottom_left.y < other.top_right.y)
 
 
 class MaximumFinder:
@@ -67,15 +69,12 @@ class MaximumFinder:
         for idx in range(1, self.n_values + 1):
             self.containers[idx] = dict(x=-1, y=-1, max=-1)
 
-    def print_result(self):
+    def get_results(self):
         """
         print the top N found value
         :return: void
         """
-        for idx in range(1, self.n_values + 1):
-            print('sum: {} x: {} y: {}'.format(self.containers[idx]['max'],
-                                               self.containers[idx]['x'],
-                                               self.containers[idx]['y']))
+        return self.containers
 
     def evaluate(self, x, y, new_sum):
         """
@@ -87,8 +86,6 @@ class MaximumFinder:
         self.x = x
         self.y = y
         self.max = new_sum
-        print('---', x, y, new_sum, '-------------------------')
-        print(self.containers)
         self.compute_max()
 
     def compute_max(self):
@@ -98,71 +95,32 @@ class MaximumFinder:
         obj = self.containers
         old_x, old_y, old_max = 0, 0, 0
 
+        # 1 .. N = 5
         for idx in range(1, self.n_values + 1):
-
-            print('')
-            print('Current Index:', idx)
-
-            # Consider if the new value is the first highest
             if idx == 1 and self.max > obj[idx]['max']:
 
-                # Store it for comparison in next coming round
-                old_x, old_y = obj[idx]['x'], obj[idx]['y']
-                old_max = obj[idx]['max']
+                old_x, old_y, old_max = obj[idx]['x'], obj[idx]['y'], obj[idx]['max']
                 obj[idx] = dict(x=self.x, y=self.y, max=self.max)
-                print('1st ', obj[idx])
 
+            # 2 .. N = 5
             elif idx > 1:
-                if old_max >= obj[idx]['max']:
-                    if old_max < obj[idx-1]['max']:
+                if old_max > obj[idx]['max']:
 
-                        # Can not overlap with any other marked area
-                        s1 = Square(Point(old_x, old_y))
-                        overlap = False
-                        for level in range(1, idx):
-                            print('level', level, 'idx', idx, obj[level])
-                            s2 = Square(Point(obj[level]['x'], obj[level]['y']))
-                            if s1.intersects(s2):
-                                overlap = True
-                                break
+                    temp_x, temp_y, temp_max = old_x, old_y, old_max
+                    old_x, old_y = obj[idx]['x'], obj[idx]['y']
+                    old_max = obj[idx]['max']
+                    obj[idx] = dict(x=temp_x, y=temp_y, max=temp_max)
 
-                        if not overlap:
-                            temp_x, temp_y, temp_max = old_x, old_y, old_max
+                else:
+                    if self.max >= obj[idx]['max']:
+                        if self.max < obj[idx - 1]['max']:
 
                             # Store it for comparison in next coming round
                             old_x, old_y = obj[idx]['x'], obj[idx]['y']
                             old_max = obj[idx]['max']
-
-                            obj[idx] = dict(x=temp_x, y=temp_y, max=temp_max)
-                            print('2nd ', obj[idx])
-                        else:
-                            old_max = -1
-
-                else:
-                    print('Considering', self.max)
-                    if self.max >= obj[idx]['max']:
-                        if self.max < obj[idx - 1]['max']:
-
-                            # Can not overlap with any other marked area
-                            s1 = Square(Point(self.x, self.y))
-                            overlap = False
-                            for level in range(1, idx):
-                                s2 = Square(Point(obj[level]['x'], obj[level]['y']))
-                                if s1.intersects(s2):
-                                    overlap = True
-                                    break
-
-                            if not overlap:
-                                # Store it for comparison in next coming round
-                                old_x, old_y = obj[idx]['x'], obj[idx]['y']
-                                old_max = obj[idx]['max']
-                                obj[idx] = dict(x=self.x, y=self.y, max=self.max)
-                                print('3rd ', obj[idx])
-                            else:
-                                old_max = -1
+                            obj[idx] = dict(x=self.x, y=self.y, max=self.max)
 
         self.containers = obj
-
 
 # FUNCTIONS ############################################################
 
@@ -181,7 +139,7 @@ def merge_arrays():
 
 def sum_tricky(list_2d, n):
     """
-    An efficient Python program to find sum of all subsquares of size k x k
+    An efficient Python program to find sum of all sub-squares of size k x k
     in 2D array
     :param list_2d: 2D array with numbers
     :param n: array width
@@ -223,7 +181,7 @@ def sum_tricky(list_2d, n):
         for j in range(k):
             sum += int(strip_sum[i][j])
         maximum_finder.evaluate(j, i, sum)
-        # print('y: {} x: {} sum: {}'.format(i, j, sum), end="\t")
+        #print('y: {} x: {} sum: {}'.format(i, j, sum), end="\t")
 
         # Calculate sum of remaining squares
         # in current row by removing the
@@ -232,11 +190,55 @@ def sum_tricky(list_2d, n):
         for j in range(1, n-k+1):
             sum += int(strip_sum[i][j+k-1] - strip_sum[i][j-1])
             maximum_finder.evaluate(j+k-1, i, sum)
-            # print('y: {} x: {} sum: {}'.format(i, j+k-1, sum), end="\t")
-        # print('')
+            #print('y: {} x: {} sum: {}'.format(i, j+k-1, sum), end="\t")
+        #print('')
 
-    print('')
-    maximum_finder.print_result()
+    #print('')
+    return maximum_finder.get_results()
+
+
+def highest_return_combination(obj):
+    """
+    Compute the highest return combination
+    :param container:
+    """
+    print(obj)
+
+    yeses = {}
+    for n in range(1, FIND_N_HIGHEST + 1):
+
+        yeses = {1: obj[n]}
+
+        next = -1
+        for m in range(n+1, FIND_N_HIGHEST + 1):
+            square1 = Square(Point(obj[n]['x'], obj[n]['y']))
+            square2 = Square(Point(obj[m]['x'], obj[m]['y']))
+            if not square1.intersects(square2):
+                yeses[len(yeses)+1] = obj[m]
+                next = m + 1
+                break
+
+        for m in range(next, FIND_N_HIGHEST + 1):
+
+            intersect = False
+            for key, val in yeses.items():
+                square1 = Square(Point(obj[m]['x'], obj[m]['y']))
+                square2 = Square(Point(val['x'], val['y'])) # yeses
+
+                if square1.intersects(square2):
+                    intersect = True
+                    break
+
+            if not intersect:
+                yeses[len(yeses) + 1] = obj[m]
+
+            if len(yeses) == 5:
+                break
+
+        print(yeses)
+        break
+
+
 
 
 # MAIN ############################################################################
@@ -251,5 +253,7 @@ if __name__ == '__main__':
     data_2d = np.sum(data_3d, axis=2)
 
     # Search for the maximum value
-    sum_tricky(data_2d.tolist(), n=ARRAY_SIZE)
+    container = sum_tricky(data_2d.tolist(), n=ARRAY_SIZE)
 
+    # Compute highest return combination
+    highest_return_combination(container)
