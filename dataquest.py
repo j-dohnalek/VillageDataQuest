@@ -20,7 +20,6 @@ SUB_ARRAY_SIZE = 10
 FIND_N_HIGHEST = 16
 FILTER_N_HIGHEST = 5
 
-
 # CLASS ################################################################
 
 
@@ -118,7 +117,6 @@ class MaximumFinder:
                     if self.max >= obj[idx]['max']:
                         if self.max < obj[idx - 1]['max']:
 
-                            # Store it for comparison in next coming round
                             old_x, old_y = obj[idx]['x'], obj[idx]['y']
                             old_max = obj[idx]['max']
                             obj[idx] = dict(x=self.x, y=self.y, max=self.max)
@@ -281,3 +279,4 @@ if __name__ == '__main__':
     end = time.clock()
     print('Code time: %.6f seconds' % (end - start))
     print('Code time: %.6f miliseconds' % ((end - start) * 1000))
+
