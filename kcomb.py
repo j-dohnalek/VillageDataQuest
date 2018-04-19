@@ -1,16 +1,17 @@
-import itertools
+import time
 
 
 def main():
-    i = [i for i in range(1, 16 + 1)]
 
-    print(len(list(itertools.combinations(i, 5))))
+    start = time.clock()
+    strip_sum = [[0 for _ in range(1000)] for _ in range(1000)]
+    end = time.clock()
+    print('Time: %.6f miliseconds' % ((end - start) * 1000))
 
-    for items in itertools.combinations(i, 5):
-
-        for item in range(5):
-            print(items[item], " ", end="")
-        print()
+    start = time.clock()
+    strip_sum = [[0] * 1000 for _ in range(1000)]
+    end = time.clock()
+    print('Time: %.6f miliseconds' % ((end - start) * 1000))
 
 
 if __name__ == '__main__':

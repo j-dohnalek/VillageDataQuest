@@ -14,16 +14,16 @@ import time
 import itertools
 
 # See generator.py
-# PATH = 'DataGenerated/*.csv'
+PATH = 'DataGenerated/*.csv'
 
-#PATH = 'Data/*.csv'
-PATH = 'Data/gas.csv'
+# PATH = 'Data/*.csv'
+# PATH = 'Data/gas.csv'
 
 # Size of the side of the array (1000x1000 in actual competition)
-ARRAY_SIZE = 10
+ARRAY_SIZE = 1000
 
 # Size of a side of a sub array
-SUB_ARRAY_SIZE = 2
+SUB_ARRAY_SIZE = 10
 
 # Find N overlapping highest values
 # TODO: Explain why 16?
@@ -35,12 +35,10 @@ FILTER_N_HIGHEST = 5
 # CLASS ################################################################
 
 
-# Checking whether two rectangles overlap in python using two bottom left
-# corners and top right corners
-# https://stackoverflow.com/questions/40795709
 class Point:
     """
     Define X, Y point
+    https://stackoverflow.com/questions/40795709
     """
     def __init__(self, xcoord=0, ycoord=0):
         self.x = xcoord
@@ -50,6 +48,7 @@ class Point:
 class Square:
     """
     Define a square
+    https://stackoverflow.com/questions/40795709
     """
     def __init__(self, top_right):
         x = top_right.x - (SUB_ARRAY_SIZE-1)
@@ -58,6 +57,10 @@ class Square:
         self.top_right = top_right
 
     def intersects(self, other):
+        """
+        Checking whether two squares overlap
+        :param other: Square object
+        """
         return not (self.top_right.x < other.bottom_left.x or
                     self.bottom_left.x > other.top_right.x or
                     self.top_right.y > other.bottom_left.y or
@@ -172,13 +175,12 @@ def sum_tricky(list_2d, n):
 
     # 1: PRE PROCESSING
     # To store sums of all strips of size k x 1
-    strip_sum = [[0 for _ in range(n)] for _ in range(n)]
+    strip_sum = [[0] * n for i in range(n)]
 
     # Go column by column
     for j in range(n):
 
-        # Calculate sum of first k x 1
-        # rectangle in this column
+        # Calculate sum of first k x 1 rectangle in this column
         sum = 0
         for i in range(k):
             sum += list_2d[i][j]
@@ -189,20 +191,16 @@ def sum_tricky(list_2d, n):
             sum += (list_2d[i+k-1][j] - list_2d[i-1][j])
             strip_sum[i][j] = sum
 
-    # 2: CALCULATE SUM of Sub - Squares
-    # using strip_sum[][]
+    # 2: CALCULATE SUM of Sub - Squares using strip_sum[][]
     for i in range(n-k+1):
-        # Calculate and print sum of first
-        # sub square in this row
+        # Calculate and print sum of first sub square in this row
         sum = 0
         for j in range(k):
             sum += int(strip_sum[i][j])
         maximum_finder.evaluate(j, i, sum)
 
-        # Calculate sum of remaining squares
-        # in current row by removing the
-        # leftmost strip of previous sub-square
-        # and adding a new strip
+        # Calculate sum of remaining squares in current row by removing the
+        # leftmost strip of previous sub-square and adding a new strip
         for j in range(1, n-k+1):
             sum += int(strip_sum[i][j+k-1] - strip_sum[i][j-1])
             maximum_finder.evaluate(j+k-1, i, sum)
@@ -217,6 +215,8 @@ def highest_return_combination(obj):
     """
 
     maxes_list = []
+
+    # Counting k-combinations (n, k) = n!/(n-k)!k!
     for combo in itertools.combinations([i for i in range(1, FIND_N_HIGHEST + 1)], FILTER_N_HIGHEST):
         sum = 0
         for idx in combo:
@@ -285,7 +285,6 @@ if __name__ == '__main__':
     # Compute highest return combination
     highest_return_combination(container)
 
-    end = time.clock()
-
-    print('Part 2 time: %.6f miliseconds' % ((end - start) * 1000))
+    print('Execution Time: %.3fms' % ((time.clock() - start) * 1000))
+    print('Execution Time: %.3fs' % ((time.clock() - start)))
 

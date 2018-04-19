@@ -5,13 +5,9 @@ DIR = 'DataGenerated/'
 
 def main():
 
-    a = np.random.randint(100, size=(1000, 1000))
-
-    np.savetxt(DIR + "1.csv", a, delimiter=",")
-    np.savetxt(DIR + "2.csv", a, delimiter=",")
-    np.savetxt(DIR + "3.csv", a, delimiter=",")
-    np.savetxt(DIR + "4.csv", a, delimiter=",")
-    np.savetxt(DIR + "5.csv", a, delimiter=",")
+    for i in range(10):
+        a = np.random.randint(100, size=(1000, 1000))
+        np.savetxt(DIR + "resource{}.csv".format(i), a, delimiter=",")
 
 
 if __name__ == '__main__':
