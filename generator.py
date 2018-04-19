@@ -7,7 +7,7 @@ def main():
 
     for i in range(10):
         a = np.random.randint(100, size=(1000, 1000))
-        np.savetxt(DIR + "resource{}.csv".format(i), a, delimiter=",")
+        np.savetxt(DIR + "resource{}.csv".format(i), a.astype(int), fmt='%i',delimiter=",")
 
 
 if __name__ == '__main__':
