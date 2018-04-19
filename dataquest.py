@@ -27,7 +27,7 @@ SUB_ARRAY_SIZE = 10
 
 # Find N overlapping highest values
 # TODO: Explain why 16?
-FIND_N_HIGHEST = 16
+FIND_N_HIGHEST = 12
 
 # Filter N unique  non-overlapping values
 FILTER_N_HIGHEST = 5
@@ -285,6 +285,8 @@ if __name__ == '__main__':
     # Compute highest return combination
     highest_return_combination(container)
 
-    print('Execution Time: %.3fms' % ((time.clock() - start) * 1000))
-    print('Execution Time: %.3fs' % ((time.clock() - start)))
+    end = time.clock()
+
+    print('Execution Time: %.3fms' % ((end - start) * 1000))
+    print('Execution Time: %.3fs' % (end - start))
 
