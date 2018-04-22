@@ -14,9 +14,7 @@ import time
 import json
 import numpy as np
 
-
 PATH = 'Data/*.csv'
-
 
 # Size of the side of the array (1000x1000 in actual competition)
 ARRAY_SIZE = 1000
@@ -263,7 +261,6 @@ def highest_return_combination(obj):
             json.dump([dict(x=x2+1, y=y2+1)], outfile)
 
         index_number += 1
-
     print('--------------------------------')
 
 
@@ -313,7 +310,3 @@ if __name__ == '__main__':
 
     print('Execution Time: %.3fms' % ((end - start) * 1000))
     print('Execution Time: %.3fs' % (end - start))
-
-
-
-
