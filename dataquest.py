@@ -9,15 +9,12 @@
 # https://www.geeksforgeeks.org/given-n-x-n-square-matrix-find-sum-sub-squares-size-k-x-k/
 
 import glob
-import numpy as np
-import time
 import itertools
+import time
+import json
+import numpy as np
 
-# See generator.py
-PATH = 'DataGenerated/*.csv'
-
-# PATH = 'Data/*.csv'
-# PATH = 'Data/gas.csv'
+PATH = 'Data/*.csv'
 
 # Size of the side of the array (1000x1000 in actual competition)
 ARRAY_SIZE = 1000
@@ -26,11 +23,10 @@ ARRAY_SIZE = 1000
 SUB_ARRAY_SIZE = 10
 
 # Find N overlapping highest values
-# TODO: Explain why 16?
-FIND_N_HIGHEST = 12
+FIND_N_HIGHEST = 35
 
 # Filter N unique  non-overlapping values
-FILTER_N_HIGHEST = 5
+FILTER_N_HIGHEST = 3
 
 # CLASS ################################################################
 
@@ -145,9 +141,28 @@ def merge_arrays():
     Merge 2D arrays into one 3D array
     :return: 3D array
     """
+    for csvfile in glob.glob(PATH):
+        print(csvfile)
+
     tuple_array = ()
     for csvfile in glob.glob(PATH):
-        tuple_array = tuple_array + (np.loadtxt(open(csvfile, "rb"), delimiter=","),)
+
+        arr = np.loadtxt(open(csvfile, "rb"), delimiter=",")
+
+        if 'Gold' in csvfile:
+            arr = arr * 1
+
+        if 'Oil' in csvfile:
+            arr = arr * 1
+
+        if 'Wheat' in csvfile:
+            arr = arr * 1
+
+        if 'Iron' in csvfile:
+            arr = arr * 1
+
+        tuple_array = tuple_array + (arr,)
+
     data = np.dstack(tuple_array)
     return data
 
@@ -236,10 +251,16 @@ def highest_return_combination(obj):
     print('Maximum Identified: ', max_sum)
     print('Combination: ', combo)
     print('--------------------------------')
+    index_number = 1
     for val in combo:
-        x1, x2 = obj[val]['x'], obj[val]['x'] - (SUB_ARRAY_SIZE - 1)
-        y1, y2 = obj[val]['y'], obj[val]['y'] + (SUB_ARRAY_SIZE - 1)
-        print('Square({}) x1: {}, y1: {} x2: {}, y2: {} Sum:{}'.format(val, x1, y1, x2, y2, obj[val]['max']))
+        x2 = obj[val]['x'] - (SUB_ARRAY_SIZE - 1)
+        y2 = obj[val]['y']
+        print('Square({}) Top Left= x: {}, y: {} Sum:{}'.format(val, x2+1, y2+1, obj[val]['max']))
+
+        with open('tmp/position{}.json'.format(index_number), 'w') as outfile:
+            json.dump([dict(x=x2+1, y=y2+1)], outfile)
+
+        index_number += 1
     print('--------------------------------')
 
 
@@ -250,12 +271,12 @@ def check_for_overlap(obj, data_container):
     :param data_container:
     :return:
     """
-    for m in range(5):
+    for m in range(FILTER_N_HIGHEST):
 
         x1, y1 = obj[data_container['combo'][m]]['x'], obj[data_container['combo'][m]]['y']
         square1 = Square(Point(x1, y1))
 
-        for n in range(m + 1, 5):
+        for n in range(m + 1, FILTER_N_HIGHEST):
 
             x2, y2 = obj[data_container['combo'][n]]['x'], obj[data_container['combo'][n]]['y']
             square2 = Square(Point(x2, y2))
@@ -289,4 +310,3 @@ if __name__ == '__main__':
 
     print('Execution Time: %.3fms' % ((end - start) * 1000))
     print('Execution Time: %.3fs' % (end - start))
-

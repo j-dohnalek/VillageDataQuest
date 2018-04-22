@@ -1,6 +1,6 @@
 # Village Data Quest
 
-https://www.villagesoftware.co.uk/data-quest#application-form
+https://www.villagesoftware.co.uk/data-quest
 
 ## The Gist
 * You and your team are competing against others in real time, to find the most valuable packages of land to claim.
@@ -10,8 +10,9 @@ https://www.villagesoftware.co.uk/data-quest#application-form
 * Claiming a grid happens on a first come, first served basis. Once you have claimed a piece of land, no one else can claim any cells in it.
 
 ## Algorithm
-* Optimal Stopping 
 * Kadane's Algorithm
+* Counting K-Combinations
+
 ## Resource
 1. https://www.geeksforgeeks.org/sliding-window-maximum-maximum-of-all-subarrays-of-size-k/
 2. https://pastebin.com/QsgPBfY6
