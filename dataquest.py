@@ -2,42 +2,41 @@
 # https://docs.scipy.org/doc/numpy-1.13.0/reference/generated/numpy.dstack.html
 # https://stackoverflow.com/questions/4913397/how-to-add-value-to-a-tuple
 # https://stackoverflow.com/questions/37142135
+# https://stackoverflow.com/questions/652291
+# https://stackoverflow.com/questions/24474522
 
 # sum_tricky Algorithm for seaching N x N subsquare
 # https://www.geeksforgeeks.org/given-n-x-n-square-matrix-find-sum-sub-squares-size-k-x-k/
 
 import glob
-import numpy as np
+import itertools
 import time
+import json
+import numpy as np
 
-# See generator.py
-#PATH = 'DataGenerated/*.csv'
 
-#PATH = 'Data/*.csv'
-PATH = 'Data/gas.csv'
+PATH = 'Data/*.csv'
+
 
 # Size of the side of the array (1000x1000 in actual competition)
-ARRAY_SIZE = 10
+ARRAY_SIZE = 1000
 
 # Size of a side of a sub array
-SUB_ARRAY_SIZE = 2
+SUB_ARRAY_SIZE = 10
 
 # Find N overlapping highest values
-# TODO: Explain why 16?
-FIND_N_HIGHEST = 16
+FIND_N_HIGHEST = 35
 
 # Filter N unique  non-overlapping values
-FILTER_N_HIGHEST = 5
+FILTER_N_HIGHEST = 3
 
 # CLASS ################################################################
 
 
-# Checking whether two rectangles overlap in python using two bottom left
-# corners and top right corners
-# https://stackoverflow.com/questions/40795709
 class Point:
     """
     Define X, Y point
+    https://stackoverflow.com/questions/40795709
     """
     def __init__(self, xcoord=0, ycoord=0):
         self.x = xcoord
@@ -47,6 +46,7 @@ class Point:
 class Square:
     """
     Define a square
+    https://stackoverflow.com/questions/40795709
     """
     def __init__(self, top_right):
         x = top_right.x - (SUB_ARRAY_SIZE-1)
@@ -55,6 +55,10 @@ class Square:
         self.top_right = top_right
 
     def intersects(self, other):
+        """
+        Checking whether two squares overlap
+        :param other: Square object
+        """
         return not (self.top_right.x < other.bottom_left.x or
                     self.bottom_left.x > other.top_right.x or
                     self.top_right.y > other.bottom_left.y or
@@ -102,34 +106,34 @@ class MaximumFinder:
         """
         Evaluate the elements on-fly
         """
-        obj = self.containers
+        bag = self.containers
         old_x, old_y, old_max = 0, 0, 0
 
         # 1 .. N highest values
         for idx in range(1, self.n_values + 1):
 
             # Deal with the highest 1st highest value
-            if idx == 1 and self.max > obj[idx]['max']:
+            if idx == 1 and self.max > bag[idx]['max']:
 
-                old_x, old_y, old_max = obj[idx]['x'], obj[idx]['y'], obj[idx]['max']
-                obj[idx] = dict(x=self.x, y=self.y, max=self.max)
+                old_x, old_y, old_max = bag[idx]['x'], bag[idx]['y'], bag[idx]['max']
+                bag[idx] = dict(x=self.x, y=self.y, max=self.max)
 
             # 2 .. N highest values
             elif idx > 1:
-                if old_max > obj[idx]['max']:
+                if old_max > bag[idx]['max']:
 
                     temp_x, temp_y, temp_max = old_x, old_y, old_max
-                    old_x, old_y, old_max = obj[idx]['x'], obj[idx]['y'], obj[idx]['max']
-                    obj[idx] = dict(x=temp_x, y=temp_y, max=temp_max)
+                    old_x, old_y, old_max = bag[idx]['x'], bag[idx]['y'], bag[idx]['max']
+                    bag[idx] = dict(x=temp_x, y=temp_y, max=temp_max)
 
                 else:
-                    if self.max >= obj[idx]['max']:
-                        if self.max < obj[idx - 1]['max']:
+                    if self.max >= bag[idx]['max']:
+                        if self.max < bag[idx - 1]['max']:
 
-                            old_x, old_y, old_max = obj[idx]['x'], obj[idx]['y'], obj[idx]['max']
-                            obj[idx] = dict(x=self.x, y=self.y, max=self.max)
+                            old_x, old_y, old_max = bag[idx]['x'], bag[idx]['y'], bag[idx]['max']
+                            bag[idx] = dict(x=self.x, y=self.y, max=self.max)
 
-        self.containers = obj
+        self.containers = bag
 
 # FUNCTIONS ############################################################
 
@@ -139,20 +143,44 @@ def merge_arrays():
     Merge 2D arrays into one 3D array
     :return: 3D array
     """
+    for csvfile in glob.glob(PATH):
+        print(csvfile)
+
     tuple_array = ()
     for csvfile in glob.glob(PATH):
-        tuple_array = tuple_array + (np.loadtxt(open(csvfile, "rb"), delimiter=","),)
+
+        arr = np.loadtxt(open(csvfile, "rb"), delimiter=",")
+
+        if 'Gold' in csvfile:
+            arr = arr * 1
+
+        if 'Oil' in csvfile:
+            arr = arr * 1
+
+        if 'Wheat' in csvfile:
+            arr = arr * 1
+
+        if 'Iron' in csvfile:
+            arr = arr * 1
+
+        tuple_array = tuple_array + (arr,)
+
     data = np.dstack(tuple_array)
     return data
 
 
 def sum_tricky(list_2d, n):
     """
-    An efficient Python program to find sum of all sub-squares of size k x k
-    in 2D array
+    An efficient Python program to find sum of all sub-squares of size k x k in 2D array
+
+    Source:
+    https://www.geeksforgeeks.org/given-n-x-n-square-matrix-find-sum-sub-squares-size-k-x-k/
+
+    Container data structure: { n: {x, y, max}, .. }
+
     :param list_2d: 2D array with numbers
     :param n: array width
-    :return: void
+    :return: n highest identified containers
     """
 
     maximum_finder = MaximumFinder(FIND_N_HIGHEST)
@@ -164,13 +192,12 @@ def sum_tricky(list_2d, n):
 
     # 1: PRE PROCESSING
     # To store sums of all strips of size k x 1
-    strip_sum = [[0 for _ in range(n)] for _ in range(n)]
+    strip_sum = [[0] * n for i in range(n)]
 
     # Go column by column
     for j in range(n):
 
-        # Calculate sum of first k x 1
-        # rectangle in this column
+        # Calculate sum of first k x 1 rectangle in this column
         sum = 0
         for i in range(k):
             sum += list_2d[i][j]
@@ -181,88 +208,86 @@ def sum_tricky(list_2d, n):
             sum += (list_2d[i+k-1][j] - list_2d[i-1][j])
             strip_sum[i][j] = sum
 
-    # 2: CALCULATE SUM of Sub - Squares
-    # using strip_sum[][]
+    # 2: CALCULATE SUM of Sub - Squares using strip_sum[][]
     for i in range(n-k+1):
-        # Calculate and print sum of first
-        # sub square in this row
+        # Calculate and print sum of first sub square in this row
         sum = 0
         for j in range(k):
             sum += int(strip_sum[i][j])
         maximum_finder.evaluate(j, i, sum)
-        #print('y: {} x: {} sum: {}'.format(i, j, sum), end="\t")
 
-        # Calculate sum of remaining squares
-        # in current row by removing the
-        # leftmost strip of previous sub-square
-        # and adding a new strip
+        # Calculate sum of remaining squares in current row by removing the
+        # leftmost strip of previous sub-square and adding a new strip
         for j in range(1, n-k+1):
             sum += int(strip_sum[i][j+k-1] - strip_sum[i][j-1])
             maximum_finder.evaluate(j+k-1, i, sum)
-            #print('y: {} x: {} sum: {}'.format(i, j+k-1, sum), end="\t")
-        #print('')
 
-    #print('')
     return maximum_finder.get_results()
 
 
 def highest_return_combination(obj):
     """
     Compute the highest return combination
-    :param container:
+    :param obj: data structure containing all data
     """
-    #print(obj)
 
-    yeses = {}
-    maximum_combination = dict(max=-1, container=None)
+    maxes_list = []
 
-    for n in range(1, FIND_N_HIGHEST + 1):
+    # Counting k-combinations (n, k) = n!/(n-k)!k!
+    for combo in itertools.combinations([i for i in range(1, FIND_N_HIGHEST + 1)], FILTER_N_HIGHEST):
+        sum = 0
+        for idx in combo:
+            sum += obj[idx]['max']
+        maxes_list.append(dict(sum=sum, combo=combo))
+    maxes_list.sort(key=lambda item: item['sum'], reverse=True)
 
-        yeses = {1: obj[n]}
+    max_sum = -1
+    combo = None
+    for container in maxes_list:
+        current_sum, current_combo = check_for_overlap(obj, container)
+        if current_sum > max_sum:
+            max_sum = current_sum
+            combo = current_combo
 
-        next = None
-        for m in range(n+1, FIND_N_HIGHEST + 1):
-            square1 = Square(Point(obj[n]['x'], obj[n]['y']))
-            square2 = Square(Point(obj[m]['x'], obj[m]['y']))
-            next = m + 1
-            if not square1.intersects(square2):
-                yeses[len(yeses)+1] = obj[m]
-                break
+    print('--------------------------------')
+    print('Maximum Identified: ', max_sum)
+    print('Combination: ', combo)
+    print('--------------------------------')
+    index_number = 1
+    for val in combo:
+        x2 = obj[val]['x'] - (SUB_ARRAY_SIZE - 1)
+        y2 = obj[val]['y']
+        print('Square({}) Top Left= x: {}, y: {} Sum:{}'.format(val, x2+1, y2+1, obj[val]['max']))
 
-        # If the next value is None at this point the scan reached the
-        # end without finding non-overlapping area
-        try:
-            for m in range(next, FIND_N_HIGHEST + 1):
+        with open('tmp/position{}.json'.format(index_number), 'w') as outfile:
+            json.dump([dict(x=x2+1, y=y2+1)], outfile)
 
-                intersect = False
-                for key, val in yeses.items():
-                    square1 = Square(Point(obj[m]['x'], obj[m]['y']))
-                    square2 = Square(Point(val['x'], val['y'])) # yeses
+        index_number += 1
 
-                    if square1.intersects(square2):
-                        intersect = True
-                        break
+    print('--------------------------------')
 
-                if not intersect:
-                    yeses[len(yeses) + 1] = obj[m]
 
-                if len(yeses) == FILTER_N_HIGHEST:
-                    break
+def check_for_overlap(obj, data_container):
+    """
+    Confirm the combination does not contain any overlap
+    :param obj:
+    :param data_container:
+    :return:
+    """
+    for m in range(FILTER_N_HIGHEST):
 
-        except TypeError:
-            pass
+        x1, y1 = obj[data_container['combo'][m]]['x'], obj[data_container['combo'][m]]['y']
+        square1 = Square(Point(x1, y1))
 
-        finally:
+        for n in range(m + 1, FILTER_N_HIGHEST):
 
-            sum = 0
-            for key, val in yeses.items():
-                sum += val['max']
+            x2, y2 = obj[data_container['combo'][n]]['x'], obj[data_container['combo'][n]]['y']
+            square2 = Square(Point(x2, y2))
 
-            if sum > maximum_combination['max']:
-                maximum_combination['max'] = sum
-                maximum_combination['container'] = yeses
+            if square1.intersects(square2):
+                return 0, ()
 
-    print(maximum_combination)
+    return data_container['sum'], data_container['combo']
 
 
 # MAIN ############################################################################
@@ -285,4 +310,6 @@ if __name__ == '__main__':
     highest_return_combination(container)
 
     end = time.clock()
-    print('Code time: %.6f miliseconds' % ((end - start) * 1000))
+
+    print('Execution Time: %.3fms' % ((end - start) * 1000))
+    print('Execution Time: %.3fs' % (end - start))
