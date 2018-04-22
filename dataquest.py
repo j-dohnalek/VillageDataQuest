@@ -148,7 +148,9 @@ def merge_arrays():
     for csvfile in glob.glob(PATH):
 
         arr = np.loadtxt(open(csvfile, "rb"), delimiter=",")
-
+        
+        # TODO: create the computation more dynamic
+        # HARDCODED NORMALISATION MULTIPLICATION ############
         if 'Gold' in csvfile:
             arr = arr * 1
 
@@ -160,7 +162,8 @@ def merge_arrays():
 
         if 'Iron' in csvfile:
             arr = arr * 1
-
+        #####################################################
+        
         tuple_array = tuple_array + (arr,)
 
     data = np.dstack(tuple_array)
